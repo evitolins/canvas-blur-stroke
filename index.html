@@ -6,11 +6,12 @@
   <link rel="stylesheet" type="text/css" href="css/canvasBlurTest.css">
 </head>
 <body>
-  <canvas id='my_canvas' width='1000' height='1000'></canvas><br>
+  <canvas id='my_canvas' width='600' height='600'></canvas><br>
   <input id='input_blur' type='range' value='0' min=0 max=20/> blur<br/>
   <input id='input_stroke' type='range' value='1' min=0 max=50/> stroke<br/>
   <input id='input_strokeTypeA' type="radio" name="input_strokeType" value="0" checked/> blur
   <input id='input_strokeTypeB' type="radio" name="input_strokeType" value="1" /> shadow<br/>
+  <input id='input_shadowOffset' type="number" value="0" min="0" max="5000" step="1000" name="input_strokeType" value="1" /> shadow offset<br/>
   <script type="text/javascript" src='js/FastBlur.js'></script>
   <script type="text/javascript" src='js/IntegralBlur.js'></script>
   <script type="text/javascript" src='js/canvasBlurTest.js'></script>
