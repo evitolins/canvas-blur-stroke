@@ -11,22 +11,24 @@ var input_preset3 = document.getElementById('preset_3');
 var input_preset4 = document.getElementById('preset_4');
 var input_preset5 = document.getElementById('preset_5');
 
-// Drawing App State
 var ctx = canvas.getContext('2d');
 var w = canvas.width;
 var h = canvas.height;
+
+// App Model
+var settings = {
+    blur_radius : 3,
+    stroke_radius : 1,
+    stroke_type : 0,
+    extra_offset : 0
+};
+
+
+// Drawing App State
 var stroke = [];
 var strokes = [];
 var is_drawing = false;
-
-var blur_radius = 3;
-var stroke_radius = 1;
-var stroke_type = 0;
-var extra_offset = 0;
-
 var bounding_box = [0, 0, 0, 0];
-
-
 
 
 // Controllers
@@ -49,22 +51,22 @@ var drawStroke = function (canvas, stroke) {
         ctx.lineTo(stroke[i][0], stroke[i][1]);
     }
     ctx.strokeStyle = 'red';
-    ctx.lineWidth = stroke_radius;
+    ctx.lineWidth = settings.stroke_radius;
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
     ctx.stroke();
-    applyBlur(blur_radius, 1);
+    applyBlur(settings.blur_radius, 1);
 };
 
 var drawShadowStroke = function (canvas, stroke) {
     var i;
-    var offsetX = w + extra_offset;
-    var offsetY = h + extra_offset;
+    var offsetX = w + settings.extra_offset;
+    var offsetY = h + settings.extra_offset;
     ctx.save();
 
     ctx.setTransform(1, 0, 0, 1, offsetX, offsetY);
     ctx.shadowColor = 'red';
-    ctx.shadowBlur = blur_radius;
+    ctx.shadowBlur = settings.blur_radius;
     ctx.shadowOffsetX = 0 - offsetX;
     ctx.shadowOffsetY = 0 - offsetY;
 
@@ -75,7 +77,7 @@ var drawShadowStroke = function (canvas, stroke) {
     }
 
     ctx.strokeStyle = "red";
-    ctx.lineWidth = stroke_radius;
+    ctx.lineWidth = settings.stroke_radius;
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
     ctx.stroke();
@@ -103,58 +105,58 @@ var listeners = {
         var y = e.offsetY;
         stroke.push([x, y]);
         clearCanvas();
-        stroke_types[stroke_type](canvas, stroke);
+        stroke_types[settings.stroke_type](canvas, stroke);
     },
     mouseup : function (e) {
         if (!is_drawing) return;
         clearCanvas();
-        stroke_types[stroke_type](canvas, stroke);
+        stroke_types[settings.stroke_type](canvas, stroke);
 
         strokes.push(stroke);
         stroke = [];
         is_drawing = false;
     },
     input_blur : function (e) {
-        blur_radius = this.value;
+        settings.blur_radius = this.value;
     },
     input_stroke : function (e) {
-        stroke_radius = this.value;
+        settings.stroke_radius = this.value;
     },
     input_strokeType : function (e) {
-        stroke_type = parseInt(this.value, 10);
+        settings.stroke_type = parseInt(this.value, 10);
     },
     input_shadowOffset : function (e) {
-        extra_offset = parseInt(this.value, 10);
+        settings.extra_offset = parseInt(this.value, 10);
     },
     input_preset1 : function (e) {
-        blur_radius = 0;
-        stroke_radius = 20;
-        stroke_type = 0;
-        extra_offset = 0;
+        settings.blur_radius = 0;
+        settings.stroke_radius = 20;
+        settings.stroke_type = 0;
+        settings.extra_offset = 0;
     },
     input_preset2 : function (e) {
-        blur_radius = 20;
-        stroke_radius = 20;
-        stroke_type = 0;
-        extra_offset = 0;
+        settings.blur_radius = 20;
+        settings.stroke_radius = 20;
+        settings.stroke_type = 0;
+        settings.extra_offset = 0;
     },
     input_preset3 : function (e) {
-        blur_radius = 20;
-        stroke_radius = 20;
-        stroke_type = 1;
-        extra_offset = -600;
+        settings.blur_radius = 20;
+        settings.stroke_radius = 20;
+        settings.stroke_type = 1;
+        settings.extra_offset = -600;
     },
     input_preset4 : function (e) {
-        blur_radius = 20;
-        stroke_radius = 20;
-        stroke_type = 1;
-        extra_offset = 0;
+        settings.blur_radius = 20;
+        settings.stroke_radius = 20;
+        settings.stroke_type = 1;
+        settings.extra_offset = 0;
     },
     input_preset5 : function (e) {
-        blur_radius = 20;
-        stroke_radius = 20;
-        stroke_type = 1;
-        extra_offset = 5000;
+        settings.blur_radius = 20;
+        settings.stroke_radius = 20;
+        settings.stroke_type = 1;
+        settings.extra_offset = 5000;
     }
 };
 
