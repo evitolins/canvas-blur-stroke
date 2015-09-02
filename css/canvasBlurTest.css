@@ -1,3 +1,9 @@
+html, body {
+	font-family: helvetica, sans-serif;
+}
+li {
+	margin-bottom: 10px;
+}
 canvas {
     outline: 1px solid #aaa;
     cursor: crosshair;
